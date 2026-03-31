@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pigpen Cipher Translator</title>
+  <style>
+    #input-form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    textarea,
+    .output-box {
+      width: 800px;
+      max-width: 2000px;
+      min-width: 300px;
+
+      height: 150px;
+      min-height: 150px;
+
+      padding: 10px;
+      font-size: 16px;
+      text-align: left;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+
+      resize: both;
+      overflow: auto;
+      box-sizing: border-box;
+    }
+
+    .output-box {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
+  </style>
+</head>
+<body>
+  <div id="input-form">
+    <label for="input">Enter text here</label>
+    <textarea id="input"></textarea>
+  </div>
+
+  <div>
+    <label for="output">Translation</label>
+    <textarea id="output" class="output-box" readonly></textarea>
+  </div>
+
+  <p>Spaces are translated as <code>/</code>.</p>
+  <p>This translator uses ASCII representations for each letter and number. Check out the chart for extended Pigpen Cipher <a href="https://www.deviantart.com/zoologyguy/art/Extended-Pigpen-Cipher-with-numbers-1158915290" target="_blank">here.</a></p>
+
+  <script>
+    let input = document.getElementById("input");
+    let output = document.getElementById("output");
+
+    const PIGPEN_CODE = {
+      "A": "_|",
+      "B": "|_|",
+      "C": "|_",
+      "D": "]",
+      "E": "[]",
+      "F": "[",
+      "G": "¯|",
+      "H": "|¯|",
+      "I": "|¯",
+
+      "J": "_•|",
+      "K": "|_•|",
+      "L": "|•_",
+      "M": "•]",
+      "N": "[•]",
+      "O": "[•",
+
+      "P": "¯•|",
+      "Q": "|¯•|",
+      "R": "|•¯",
+
+      "S": "\\/",
+      "T": ">",
+      "U": "<",
+      "V": "/\\",
+      "W": "\\•/",
+      "X": "•>",
+      "Y": "<•",
+      "Z": "/•\\",
+
+      "1": "\\_\\",
+      "2": "/_/",
+      "3": "<>",
+      "4": "/¯/",
+      "5": "\\¯\\",
+      "6": "\\_•\\",
+      "7": "/_•/",
+      "8": "<•>",
+      "9": "/¯•/",
+      "0": "\\¯•\\"
+    };
+
+    input.addEventListener("input", updateOutput);
+
+    function updateOutput() {
+      output.value = translateToPigpen(input.value);
+    }
+
+    function translateToPigpen(text) {
+      let result = "";
+
+      for (let i = 0; i < text.length; i++) {
+        let char = text[i];
+
+        if (char === " ") {
+          result += "/ ";
+          continue;
+        }
+
+        let upperChar = char.toUpperCase();
+        let code = PIGPEN_CODE[upperChar];
+
+        if (code) {
+          result += code + " ";
+        } else {
+          result += char + " ";
+        }
+      }
+
+      return result.trim();
+    }
+  </script>
+</body>
+</html>
