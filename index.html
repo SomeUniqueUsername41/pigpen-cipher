@@ -33,14 +33,15 @@
     }
 
     .output-box {
-  font-size: 20px;
-  font-weight: bold;
-  font-family: "Courier New", Courier, monospace;
-}
+      font-size: 20px;
+      font-weight: bold;
+      font-family: "Courier New", Courier, monospace;
+    }
   </style>
 </head>
 <body>
   <h1>Pigpen Cipher translator</h1>
+
   <div id="input-form">
     <label for="input">Enter text here</label>
     <textarea id="input"></textarea>
@@ -115,6 +116,11 @@
 
         if (char === " ") {
           result += "  ";
+          continue;
+        }
+
+        if (char === "." || char === "?" || char === "!") {
+          result += char;
           continue;
         }
 
