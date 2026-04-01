@@ -102,6 +102,11 @@
       "0": "\\¯•\\"
     };
 
+    const KEEP_AS_IS = [
+      ">:(", ">:)", ">:D", "D:<", ":)", ":(", ";)", ":D", "D:", ";D",
+      ":P", "OoO", "O.O", "O_O", "^v^", "^o^", "^_^", "<3", "8D", "D8"
+    ].sort((a, b) => b.length - a.length);
+
     input.addEventListener("input", updateOutput);
 
     function updateOutput() {
@@ -110,17 +115,33 @@
 
     function translateToPigpen(text) {
       let result = "";
+      let i = 0;
 
-      for (let i = 0; i < text.length; i++) {
+      while (i < text.length) {
+        let matched = false;
+
+        for (let emo of KEEP_AS_IS) {
+          if (text.startsWith(emo, i)) {
+            result += emo;
+            i += emo.length;
+            matched = true;
+            break;
+          }
+        }
+
+        if (matched) continue;
+
         let char = text[i];
 
         if (char === " ") {
           result += "  ";
+          i++;
           continue;
         }
 
         if (char === "." || char === "?" || char === "!" || char === "-" || char === "$" || char === "_") {
           result += char;
+          i++;
           continue;
         }
 
@@ -132,6 +153,8 @@
         } else {
           result += char + " ";
         }
+
+        i++;
       }
 
       return result.trim();
