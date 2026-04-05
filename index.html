@@ -133,6 +133,14 @@
 
         let char = text[i];
 
+        // Fix: no space before new lines
+        if (char === "\n") {
+          result = result.trimEnd();
+          result += "\n";
+          i++;
+          continue;
+        }
+
         if (char === " ") {
           result += "  ";
           i++;
@@ -157,7 +165,7 @@
         i++;
       }
 
-      return result.trim();
+      return result.trimEnd();
     }
   </script>
 </body>
