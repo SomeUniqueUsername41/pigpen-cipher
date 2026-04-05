@@ -113,7 +113,7 @@
       output.value = translateToPigpen(input.value);
     }
 
-    function translateToPigpen(text) {
+    function translateLine(text) {
       let result = "";
       let i = 0;
 
@@ -132,14 +132,6 @@
         if (matched) continue;
 
         let char = text[i];
-
-        // Fix: no space before new lines
-        if (char === "\n") {
-          result = result.trimEnd();
-          result += "\n";
-          i++;
-          continue;
-        }
 
         if (char === " ") {
           result += "  ";
@@ -166,6 +158,10 @@
       }
 
       return result.trimEnd();
+    }
+
+    function translateToPigpen(text) {
+      return text.split(/\r?\n/).map(translateLine).join("\n");
     }
   </script>
 </body>
